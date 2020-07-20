@@ -1,0 +1,32 @@
+{
+  "name": "parse-docker-image-name",
+  "version": "1.0.0",
+  "description": "Parse a docker image name into its components",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "standard --fix",
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/retrohacker/parse-docker-image-name.git"
+  },
+  "keywords": [
+    "docker",
+    "image",
+    "name",
+    "parse"
+  ],
+  "author": "William Blankenship <code@blankenship.io>",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/retrohacker/parse-docker-image-name/issues"
+  },
+  "homepage": "https://github.com/retrohacker/parse-docker-image-name#readme",
+  "devDependencies": {
+    "ava": "^3.10.1"
+  },
+  "dependencies": {
+    "standard": "^14.3.4"
+  }
+}
