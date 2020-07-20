@@ -17,7 +17,11 @@ const p = (name) => {
       result = { hostname: components[0], username: components[1], reponame: components[2] }
       break
   }
-  if (!result.hostname && result.username && result.username.indexOf('.') > 0) {
+  if (
+    !result.hostname &&
+    result.username &&
+    (result.username.indexOf('.') > 0 || result.username.indexOf(':') > 0)
+  ) {
     result.hostname = result.username
     delete result.username
   }
