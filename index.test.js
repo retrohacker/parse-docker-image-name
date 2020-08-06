@@ -3,28 +3,30 @@ const index = require('./index.js')
 
 const tests = {
   inputs: [
-    'alpine', // reponame
-    'registry:2', // reponame:tag
-    'jpetazzo/pxe', // username/reponame
-    'jpetazzo/pxe:latest', // username/reponame:tag
-    'quay.io/signalfuse/zookeeper', // hostname/username/reponame
-    'index.docker.io/library/ubuntu:latest', // hostname/username/reponame:tag
-    'internal.mycorp.com:5000/revealjs', // hostname:port/reponame
-    'internal.mycorp.com:5000/revealjs:3.4.5-3', // hostname:port/reponame:tag
-    'localhost:5000/mart/mass:latest', // hostname:port/username/reponame:tag
-    'localhost:5000/mass' // hostname:port/reponame:tag
+    'alpine', // name
+    'alpine@sha256:00000000000000000000000000000000', // name@digest
+    'registry:2', // name:tag
+    'jpetazzo/pxe', // org/name
+    'jpetazzo/pxe:latest', // org/name:tag
+    'quay.io/signalfuse/zookeeper', // hostname/org/name
+    'index.docker.io/library/ubuntu:latest', // hostname/org/name:tag
+    'internal.mycorp.com:5000/revealjs', // hostname:port/name
+    'internal.mycorp.com:5000/revealjs:3.4.5-3', // hostname:port/name:tag
+    'localhost:5000/mart/mass:latest', // hostname:port/org/name:tag
+    'localhost:5000/mass' // hostname:port/name:tag
   ],
   outputs: [
-    { reponame: 'alpine' },
-    { reponame: 'registry', tag: '2' },
-    { username: 'jpetazzo', reponame: 'pxe' },
-    { username: 'jpetazzo', reponame: 'pxe', tag: 'latest' },
-    { hostname: 'quay.io', username: 'signalfuse', reponame: 'zookeeper' },
-    { hostname: 'index.docker.io', username: 'library', reponame: 'ubuntu', tag: 'latest' },
-    { hostname: 'internal.mycorp.com', port: '5000', reponame: 'revealjs' },
-    { hostname: 'internal.mycorp.com', port: '5000', reponame: 'revealjs', tag: '3.4.5-3' },
-    { hostname: 'localhost', port: '5000', username: 'mart', reponame: 'mass', tag: 'latest' },
-    { hostname: 'localhost', port: '5000', reponame: 'mass' }
+    { name: 'alpine' },
+    { name: 'alpine', digest: 'sha256:00000000000000000000000000000000' },
+    { name: 'registry', tag: '2' },
+    { org: 'jpetazzo', name: 'pxe' },
+    { org: 'jpetazzo', name: 'pxe', tag: 'latest' },
+    { domain: 'quay.io', hostname: 'quay.io', org: 'signalfuse', name: 'zookeeper' },
+    { domain: 'index.docker.io', hostname: 'index.docker.io', org: 'library', name: 'ubuntu', tag: 'latest' },
+    { domain: 'internal.mycorp.com:5000', hostname: 'internal.mycorp.com', port: '5000', name: 'revealjs' },
+    { domain: 'internal.mycorp.com:5000', hostname: 'internal.mycorp.com', port: '5000', name: 'revealjs', tag: '3.4.5-3' },
+    { domain: 'localhost:5000', hostname: 'localhost', port: '5000', org: 'mart', name: 'mass', tag: 'latest' },
+    { domain: 'localhost:5000', hostname: 'localhost', port: '5000', name: 'mass' }
   ]
 }
 
