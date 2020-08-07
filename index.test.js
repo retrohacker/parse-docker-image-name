@@ -4,7 +4,7 @@ const index = require('./index.js')
 const tests = {
   inputs: [
     'alpine', // name
-    'alpine@sha256:00000000000000000000000000000000', // name@digest
+    'alpine@sha256:aaaaf56b44807c64d294e6c8059b479f35350b454492398225034174808d1726', // name@digest
     'registry:2', // name:tag
     'jpetazzo/pxe', // org/name
     'jpetazzo/pxe:latest', // org/name:tag
@@ -16,17 +16,17 @@ const tests = {
     'localhost:5000/mass' // hostname:port/name:tag
   ],
   outputs: [
-    { name: 'alpine' },
-    { name: 'alpine', digest: 'sha256:00000000000000000000000000000000' },
-    { name: 'registry', tag: '2' },
-    { org: 'jpetazzo', name: 'pxe' },
-    { org: 'jpetazzo', name: 'pxe', tag: 'latest' },
-    { domain: 'quay.io', hostname: 'quay.io', org: 'signalfuse', name: 'zookeeper' },
-    { domain: 'index.docker.io', hostname: 'index.docker.io', org: 'library', name: 'ubuntu', tag: 'latest' },
-    { domain: 'internal.mycorp.com:5000', hostname: 'internal.mycorp.com', port: '5000', name: 'revealjs' },
-    { domain: 'internal.mycorp.com:5000', hostname: 'internal.mycorp.com', port: '5000', name: 'revealjs', tag: '3.4.5-3' },
-    { domain: 'localhost:5000', hostname: 'localhost', port: '5000', org: 'mart', name: 'mass', tag: 'latest' },
-    { domain: 'localhost:5000', hostname: 'localhost', port: '5000', name: 'mass' }
+    { path: 'alpine' },
+    { path: 'alpine', digest: 'sha256:aaaaf56b44807c64d294e6c8059b479f35350b454492398225034174808d1726' },
+    { path: 'registry', tag: '2' },
+    { path: 'jpetazzo/pxe' },
+    { path: 'jpetazzo/pxe', tag: 'latest' },
+    { domain: 'quay.io', path: 'signalfuse/zookeeper' },
+    { domain: 'index.docker.io', path: 'library/ubuntu', tag: 'latest' },
+    { domain: 'internal.mycorp.com:5000', path: 'revealjs' },
+    { domain: 'internal.mycorp.com:5000', path: 'revealjs', tag: '3.4.5-3' },
+    { domain: 'localhost:5000', path: 'mart/mass', tag: 'latest' },
+    { domain: 'localhost:5000', path: 'mass' }
   ]
 }
 

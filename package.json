@@ -4,7 +4,7 @@
   "description": "Parse a docker image name into its components",
   "main": "index.js",
   "scripts": {
-    "pretest": "standard --fix",
+    "pretest": "standard --fix index.js index.test.js",
     "test": "ava"
   },
   "repository": {
@@ -24,9 +24,7 @@
   },
   "homepage": "https://github.com/retrohacker/parse-docker-image-name#readme",
   "devDependencies": {
-    "ava": "^3.10.1"
-  },
-  "dependencies": {
+    "ava": "^3.10.1",
     "standard": "^14.3.4"
   }
 }

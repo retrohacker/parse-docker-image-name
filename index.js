@@ -1,55 +1,45 @@
-// This regular expression is generated based on the output of main.go
-// for more context refer to the README.md in this repo
-const regexp = /^(?:(?<domain>(?<hostname>(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])(?:(?:\.(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]))+)?)(?::(?<port>[0-9]+))?)\/)?(?:(?<org>[a-z0-9]+(?:(?:(?:[._]|__|[-]*)[a-z0-9]+)+)?)\/)?(?<name>(?:[a-z0-9]+(?:(?:(?:[._]|__|[-]*)[a-z0-9]+)+)?\/?)+)(?::(?<tag>[\w][\w.-]{0,127}))?(?:@(?<digest>[A-Za-z][A-Za-z0-9]*(?:[-_+.][A-Za-z][A-Za-z0-9]*)*[:][a-zA-Z0-9]{32,}))?/
+var reference = require('./main.js')
 
-const parse = (input) => {
-  if (Array.isArray(input)) return input.map(p)
-  return p(input)
+var hasPort = /:[0-9]+/
+var hasDot = /\./
+var isLocalhost = /^localhost(:[0-9]+)?$/
+
+module.exports = function parse (image) {
+  if (Array.isArray(image)) return image.map(p)
+  return p(image)
 }
 
-const p = (name) => {
-  const result = regexp.exec(name)
-
-  if (!result) {
+function p (image) {
+  var parsed = reference.Parse(image)
+  // Error object returned
+  if (!parsed[0].$val) {
     return {}
   }
+  var components = (function getKeys (input, result) {
+    Object.keys(input).forEach(function (v) {
+      if ((typeof input[v]) === 'object' && input[v].visited !== true) {
+        input[v].visited = true
+        getKeys(input[v], result)
+      }
+      result[v] = input[v]
+    })
+    return result
+  })(parsed[0], {})
 
-  const groups = result.groups
+  Object.keys(components).forEach(function (v) {
+    if ((typeof components[v]) !== 'string') {
+      delete components[v]
+    }
+    if (components[v] === '') {
+      delete components[v]
+    }
+  })
 
-  // If the domain is set but the org is not, and the domain isn't localhost, doesn't include a port, and doesn't include any dots
-  // it means the user likely wanted this to be a org. For example, with foo/bar:latest, we want foo to be a org
-  if (groups.org === undefined && groups.domain && groups.port === undefined && groups.domain !== 'localhost' && groups.domain.indexOf('.') === -1) {
-    groups.org = groups.domain
-    groups.domain = undefined
-    groups.hostname = undefined
+  var domain = components.domain
+  if (domain && !hasPort.test(domain) && !hasDot.test(domain) && !isLocalhost.test(domain)) {
+    components.path = domain + '/' + components.path
+    delete components.domain
   }
 
-  // Remove any optional keys that are undefined
-  if (groups.domain === undefined) {
-    delete groups.domain
-  }
-
-  if (groups.hostname === undefined) {
-    delete groups.hostname
-  }
-
-  if (groups.port === undefined) {
-    delete groups.port
-  }
-
-  if (groups.org === undefined) {
-    delete groups.org
-  }
-
-  if (groups.tag === undefined) {
-    delete groups.tag
-  }
-
-  if (groups.digest === undefined) {
-    delete groups.digest
-  }
-
-  return groups
+  return components
 }
-
-module.exports = parse
